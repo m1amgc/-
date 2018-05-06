@@ -1,0 +1,58 @@
+cd usr		切换到该目录下usr目录 
+cd ../		切换到上一层目录 	
+cd /		  切换到系统根目录 	
+cd ~		  切换到用户主目录 	
+cd -		  切换到上一个所在目录
+
+
+目录的命令：
+1、增加目录 mkdir 目录名
+2、删除目录 rm -rf 目录名
+3、查看目录 ls [-al] ls -a就是显示所有文件，包括隐藏的；  ls -l 可以看到所有文件的详细信息
+4、寻找目录 find 目录 参数   比如：find /root -name '*test*'  寻找/root下的名字有test的文件
+5、修改目录 mv oldTest newTest 就是把当前目录下的oldTest目录修改为newTest
+6、移动目录 mv oldTest /root  就是把当前目录下的oldTest目录剪切到/root目录下
+7、拷贝目录 cp -r /usr/newTest /test 就是把/usr下的newTest目录拷贝到/test目录下，-r代表递归
+
+文件的命令：
+1、创建文件：touch 文件名称
+2、查看文件：cat/more/less/tail 文件名称
+  使用cat查看/etc/sudo.conf文件，只能显示最后一屏内容
+  使用more查看/etc/sudo.conf文件，可以显示百分比，回车可以向下一行，	空格可以向下一页，q可以退出查看
+  使用less查看/etc/sudo.conf文件，可以使用键盘上的PgUp和PgDn向上	和向下翻页，q结束查看
+  使用tail -10 查看/etc/sudo.conf文件的后10行，Ctrl+C结束，命令 tail -f 文件 可以对某个文件进行动态监控，
+  例如tomcat的日志文件，	会随着程序的运行，日志会变化，可以使用tail -f catalina-2016-11-11.log 监控文件的变化
+3、修改文件内容：vim 文件名称
+  vim 文件------>进入文件----->命令模式------>按i进入编辑模式----->编辑文件	------->按Esc进入底行模式----->输入:wq/q!
+  vim文件之后，进入了文件，这时候是命令模式，是不可以进行打字的，按i之后就进入了编辑模式，可以开始编辑文件，编辑完文件之后就
+  按ESC，退出编辑模式，开始底行模式，底行模式就是在最低端开始输入，先输入冒号:  ，然后输入wq或者q!，wq是保存并退出的意思，而
+  q!是强制退出，是不会保存的。
+4、删除文件：
+  与删除目录一样， rm -rf 文件名 
+  
+压缩命令：
+  压缩文件一般以.tar.gz结尾。
+  tar -zcvf 压缩后的文件名  要压缩的文件
+  比如打包并压缩/test下的所有文件 压缩后的压缩包指定名称为xxx.tar.gz
+  tar -zcvf xxx.tar.gz aaa.txt bbb.txt ccc.txt   后面三个.txt都是要打包压缩的文件
+  tar -zcvf xxx.tar.gz ./*  ./代表的是当前文件夹
+
+解压缩命令：
+  tar -xvf 压缩文件
+  将/test下的xxx.tar.gz解压到当前目录下
+  tar -xvf xxx.tar.gz
+  将/test下的xxx.tar.gz解压到根目录/usr下
+  tar -xvf xxx.tar.gz -C /usr
+  
+其他命令：
+  1、显示当前所在位置：pwd
+  2、搜索命令：grep 搜索关键字  文件名 例如搜索/sudo.conf包含字符串to的行 grep to sudo.conf
+  3、管道命令： |  将前一个命令的输出作为本次目录的输入 示例：查看当前系统中所有的进程中包括system字符串的进程
+    ps -ef | grep system
+  4、参看进程：ps -ef 查看当前系统中运行的进程 
+  5、杀死进程：kill -9 进程的pid  pid就想windows下的进程pid，打开任务管理器的详细信息就可以看见，linux可以用ps -ef查看
+  6、网络通信： 
+  查看网卡信息：ifconfig    
+  查看与某台机器的连接情况：ping 目标地址 
+  查看当前系统的端口使用：netstat -an
+
