@@ -1,0 +1,48 @@
+下载mysql源安装包
+# wget http://dev.mysql.com/get/mysql57-community-release-el7-8.noarch.rpm
+ 
+安装mysql源包
+#yum localinstall mysql57-community-release-el7-8.noarch.rpm
+
+检查mysql源是否安装成功
+# yum repolist enabled | grep "mysql.*-community.*"
+
+看到下图(三个)表示成功：
+mysql-connectors-community      MySQL Connectors Community      36
+mysql-tools-community           MySQL Tools Community           47
+mysql57-community               MySQL5.7 Community Server      189
+ 
+安装MySQL服务
+# yum install mysql-community-server
+
+启动MySQL服务
+# systemctl start mysqld
+ 
+查看MySQL的启动状态
+# systemctl status mysqld
+
+设置开机启动
+# systemctl enable mysqld
+# systemctl daemon-reload #重新载入
+ 
+查看root默认密码
+# grep 'temporary password' /var/log/mysqld.log
+
+修改root密码
+# mysql -uroot -p
+
+mysql> ALTER USER 'root'@'localhost' IDENTIFIED BY 'Abc1234!';
+或者
+mysql> set password for'root'@'localhost'=password('Abc1234!');
+
+注意：mysql5.7默认安装了密码安全检查插件（validate_password），默认密码检查策略要求密码必须包含：大小写字母、数字和特殊符号，并且长度不能少于8位。否则会提示ERROR 1819 (HY000): Your passworddoes not satisfy the current policy requirements错误
+
+添加远程连接登录用户，如：用户名：test，密码：Abc@1234
+mysql>GRANT ALL PRIVILEGES ON *.* TO 'test'@'%'IDENTIFIED BY 'Abc@1234' WITH GRANT OPTION;
+
+重启mysql服务
+# systemctl restart mysqld
+
+完毕，可远程用Navicat连接了。
+
+最后如果是阿里云（腾讯云不知道要不要）就要配置安全组，打开3306端口。如果是使用虚拟机就要打开3306端口（上网查找）
